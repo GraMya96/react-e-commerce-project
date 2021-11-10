@@ -22,7 +22,7 @@ const Header = () => {
             <NavLink
                 to="/"
                 className='logo-container'>
-                <Logo className='logo' />
+                <Logo className='logo img-logo' />
             </NavLink>
 
             <div className="other-links">
