@@ -45,7 +45,7 @@ const CartDropdown = () => {
                                     quantity = { cartItem.quantity } />
                             } )
 
-                            : <span className="empty-message">Your cart is empty</span>
+                            : <span className="empty-message">Your cart is em6u56u5pty</span>
                 }
             </div>
             <Button onClick = { goToCheckoutPage }>GO TO CHECKOUT</Button>
