@@ -35,7 +35,7 @@ const CartDropdown = () => {
         <div className='cart-dropdown'>
             <div className="cart-items">
                 {
-                    cartItems && cartItems.length > 0 && currentUser
+                    cartItems && cartItems.length > 0 && currentUser && currentUser.tokenId
                             ? cartItems.map( cartItem => {
                                 return <CartItem
                                     key = { cartItem.id }
