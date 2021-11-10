@@ -31,10 +31,6 @@ const Header = () => {
                     Shop
                 </NavLink>
 
-                <NavLink className='option' to='/contacts'>
-                    Contacts
-                </NavLink>
-
                 { currentUser
                     ? (
                         <div className="option" onClick={ handleLogout}>Sign Out</div>
