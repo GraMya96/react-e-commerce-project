@@ -23,6 +23,7 @@ const CartDropdown = () => {
 
     const history = useHistory();
     const cartItems = useSelector( state => state.cart.cartItems );
+    const currentUser = useSelector( state => state.user.currentUser );
     const dispatch = useDispatch();
 
     const goToCheckoutPage = () => {
@@ -34,7 +35,7 @@ const CartDropdown = () => {
         <div className='cart-dropdown'>
             <div className="cart-items">
                 {
-                    cartItems && cartItems.length > 0
+                    cartItems && cartItems.length > 0 && currentUser
                             ? cartItems.map( cartItem => {
                                 return <CartItem
                                     key = { cartItem.id }
