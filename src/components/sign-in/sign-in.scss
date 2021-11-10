@@ -1,0 +1,27 @@
+.sign-in {
+    width: 30vw;
+
+    @media screen and (max-width: 800px) {
+        margin-bottom: 80px;
+        width: 80vw;
+    }
+
+    & .title {
+        margin-bottom: 10px;
+    }
+
+    & button:first-of-type {
+        margin-bottom: 15px;
+    }
+
+    & .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        align-items: flex-start;
+
+        @media screen and (max-width: 1300px) {
+            flex-direction: column;
+        }
+    }
+}
