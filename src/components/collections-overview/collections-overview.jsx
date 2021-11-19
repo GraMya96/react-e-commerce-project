@@ -15,21 +15,24 @@ import './collections-overview.scss';
 
 const CollectionsOverview = () => {
 
-    const shopItemsSelector = useSelector( state => state.shop.shop_items );
+    const shopItemsSelector = useSelector( state => state.shop.collections );
+    let collectionsOverview;
 
-    return (
-        <div className='collections-overview'>
-            {
-                shopItemsSelector.map( singleCategory => {
-                    return <CollectionPreview
-                        key = { singleCategory.id }
-                        title = { singleCategory.title }
-                        items = { singleCategory.items }
-                    />
-                } )
-            }
-        </div>
-    )
+    collectionsOverview = shopItemsSelector && Array.isArray( shopItemsSelector )
+        ?   <div className='collections-overview'>
+                {
+                    shopItemsSelector.map( singleCategory => {
+                        return <CollectionPreview
+                            key = { singleCategory.id }
+                            title = { singleCategory.title }
+                            items = { singleCategory.items }
+                        />
+                    })
+                }
+            </div>
+        : null;
+
+    return collectionsOverview;
 }
 
 

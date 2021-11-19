@@ -20,35 +20,34 @@ import { useSelector } from 'react-redux';
 
 const CollectionPage = () => {
 
-    const allItemsSelector = useSelector( state => state.shop.shop_items )
-
     const match = useRouteMatch();
     const categoryString = match.params.category;
+
+    const allItemsSelector = useSelector( state => state.shop.collections );
+    let items;
+    items = allItemsSelector && Array.isArray( allItemsSelector )
+        ? allItemsSelector
+            .filter(
+                singleCategory => {
+                    return singleCategory.routeName === categoryString;
+                }
+            )[0].items
+            .map(
+                singleItem => {
+                    return <CollectionItem
+                        key = { singleItem.id }
+                        item = { singleItem }
+                    />
+                }
+            )
+        : null;
 
     return (
         <div className='collection-page'>
             <h2 className='title'>{ categoryString.charAt(0).toUpperCase() + categoryString.slice(1) }</h2>
             <div className="items">
-
-                {
-                    allItemsSelector
-                    .filter(
-                        singleCategory => {
-                            return singleCategory.routeName === categoryString;
-                        }
-                    ).[0].items
-                    .map(
-                        singleItem => {
-                            return <CollectionItem
-                                key = { singleItem.id }
-                                item = { singleItem }
-                            />
-                        }
-                    )
-                }
-
+                { items }
             </div>
-
         </div>
     )
 }

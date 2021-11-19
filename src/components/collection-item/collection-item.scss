@@ -50,4 +50,16 @@
             border-radius: 0;
         }
     }
+
+    & span.adding-cart-error {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background-color: red;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 10px;
+        font-size: .85rem;
+        color: #fff;
+    }
 }

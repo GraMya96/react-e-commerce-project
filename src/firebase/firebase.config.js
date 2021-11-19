@@ -15,7 +15,7 @@ const config = {
 };
 
 // Initialize Firebase
-firebase.initializeApp( config ) ;
+!firebase.apps.length ? firebase.initializeApp(config) : firebase.app()
 
 // Exporting to use them whenever we need them:
 export const auth = firebase.auth();
@@ -38,7 +38,7 @@ export const createUserProfileDocument = async ( user, additionalData ) => {
 
         if( !userSnapShot.exists ) {
             // If the user Snaphot doesn't exist, we create it...
-            // we create a new User on the DB based on our userAuth object
+            // we create a new User on the DB based on our user object
 
             const { displayName, email } = user;
             const createdAt = new Date();
@@ -59,6 +59,49 @@ export const createUserProfileDocument = async ( user, additionalData ) => {
 
         }
     }
+}
+
+// We use this function to automatically create our collection
+// in the Firestore DB (we had the data in the shop_data file before,
+// but we didn't want to add all of it manually)
+export const createCollectionAndDocumentsInFirebase = async ( collectionKey, objectsToAdd ) => {
+
+    const collectionRef = firestore.collection(collectionKey);
+    // which gives us back a reference object...
+
+    const batch = firestore.batch();
+    objectsToAdd.forEach(obj => {
+        const newDocRef = collectionRef.doc(); //set a unique key for each collection item
+        batch.set( newDocRef, obj );
+    });
+
+    return await batch.commit();
+};
+
+export const convertConnectionSnapshotToMap = collectionsSnapshot => {
+    const transformedCollection = collectionsSnapshot.docs.map(doc => {
+        const { title, items } = doc.data();
+
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: doc.id,
+            title,
+            items
+        }
+    });
+
+    // return transformedCollection.reduce((accumulator, collection) => {
+    //     accumulator[collection.title.toLowerCase()] = collection;
+
+    //     return accumulator;
+
+    //     // hats: { hats object collection },
+    //     // jackets: { jackets object collection }
+    //     // etc.
+    // }, {})
+
+    // We need an array of objects to use all the map methods:
+    return transformedCollection;
 }
 
 const provider = new firebase.auth.GoogleAuthProvider(); // Google Sign In Authentication

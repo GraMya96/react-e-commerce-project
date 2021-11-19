@@ -7,7 +7,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.scss';
 import SignInSignUpPage from './pages/sign-in-and-sign-up-page/sign-in-and-sign-up-page.jsx';
-import { auth, createUserProfileDocument } from './firebase/firebase.config';
+import { auth, createUserProfileDocument, createCollectionAndDocumentsInFirebase } from './firebase/firebase.config';
 
 /* Redux Actions */
 import { setCurrentUser } from './redux/user/user.actions';
@@ -16,6 +16,7 @@ import { setCurrentUser } from './redux/user/user.actions';
 const App = () => {
 
 	const currentUser = useSelector( state => state.user.currentUser );
+	//const collectionsForPreview = useSelector( state => state.shop.shop_items );
 	const dispatch = useDispatch();
 
 	let unsubscribeFromAuth = null;
