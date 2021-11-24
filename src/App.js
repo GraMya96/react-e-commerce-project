@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
-import Homepage from './pages/homepage/homepage.jsx';
-import ShopPage from './pages/shop-page/shop-page.jsx';
-import CheckoutPage from './pages/checkout/checkout.jsx';
+import React, { useEffect, lazy, Suspense } from 'react';
+
 import Header from './components/header/header.jsx';
+import ErrorBoundary from './components/error-boundary/error-boundary.jsx';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.scss';
-import SignInSignUpPage from './pages/sign-in-and-sign-up-page/sign-in-and-sign-up-page.jsx';
-import { auth, createUserProfileDocument, createCollectionAndDocumentsInFirebase } from './firebase/firebase.config';
+import { auth, createUserProfileDocument } from './firebase/firebase.config';
 
 /* Redux Actions */
 import { setCurrentUser } from './redux/user/user.actions';
+
+/* Lazy Loaded Pages */
+const Homepage = lazy(() => import( './pages/homepage/homepage.jsx' ));
+const ShopPage = lazy(() => import( './pages/shop-page/shop-page.jsx' ));
+const CheckoutPage = lazy(() => import( './pages/checkout/checkout.jsx' ));
+const SignInSignUpPage = lazy(() => import( './pages/sign-in-and-sign-up-page/sign-in-and-sign-up-page.jsx' ));
 
 
 const App = () => {
@@ -67,29 +71,33 @@ const App = () => {
 			<Header />
 
 			<Switch>
-				<Route
-					exact
-					path="/"
-					component={ Homepage }
-				/>
+				<ErrorBoundary>
+					<Suspense fallback={ <div>...</div> }>
+						<Route
+							exact
+							path="/"
+							component={ Homepage }
+						/>
 
-				<Route
-					path="/shop"
-					component={ ShopPage }
-				/>
+						<Route
+							path="/shop"
+							component={ ShopPage }
+						/>
 
-				<Route
-					path="/checkout"
-					component={ CheckoutPage }
-				/>
+						<Route
+							path="/checkout"
+							component={ CheckoutPage }
+						/>
 
-				<Route
-					path="/sign-in"
-					render={ () => currentUser
-							? <Redirect to='/' />
-							: <SignInSignUpPage />
-					}
-				/>
+						<Route
+							path="/sign-in"
+							render={ () => currentUser
+									? <Redirect to='/' />
+									: <SignInSignUpPage />
+							}
+						/>
+					</Suspense>
+				</ErrorBoundary>
 			</Switch>
 		</div>
 
