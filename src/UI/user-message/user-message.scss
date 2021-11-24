@@ -1,0 +1,13 @@
+.user-message {
+    position: absolute;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: rgba(0, 128, 0, 0.75);
+    padding: 10px;
+    font-size: .85rem;
+    color: #fff;
+
+    &.error {
+        background-color: rgba(255, 0, 0, .75);
+    }
+}

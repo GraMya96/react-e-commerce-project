@@ -51,15 +51,8 @@
         }
     }
 
-    & span.adding-cart-error {
-        position: absolute;
+    & span.user-message {
         top: 0;
         width: 100%;
-        background-color: rgba(255, 0, 0, .75);
-        font-weight: 700;
-        text-transform: uppercase;
-        padding: 10px;
-        font-size: .85rem;
-        color: #fff;
     }
 }
