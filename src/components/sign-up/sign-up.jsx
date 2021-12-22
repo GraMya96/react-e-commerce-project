@@ -5,6 +5,7 @@ import Input from '../input/input.jsx';
 import Button from '../button/button.jsx';
 
 import { auth, createUserProfileDocument } from '../../firebase/firebase.config';
+import UserMessage from '../../UI/user-message/user-message';
 
 
 const SignUp = props => {
@@ -19,6 +20,11 @@ const SignUp = props => {
     } );
 
     const { displayName, email, password, confirmPassword } = userSignUp;
+
+    const [ error, setError ] = useState({
+        isError: false,
+        message: ''
+    });
 
     const handleChange = ( event ) => {
 
@@ -53,7 +59,7 @@ const SignUp = props => {
             // and then change the state to its original values, clearing
             // the form
             setUserSignUp( {
-                name: '',
+                displayName: '',
                 email: '',
                 password: '',
                 confirmPassword: ''
@@ -61,7 +67,10 @@ const SignUp = props => {
 
         }
         catch( error ) {
-            console.log( error )
+            setError({
+                isError: true,
+                message: error.message
+            });
         }
     }
 
@@ -107,6 +116,14 @@ const SignUp = props => {
                     type="submit">
                     Sign Up
                 </Button>
+
+                { error.isError
+                    && <UserMessage
+                        type="error"
+                        marginTop
+                        marginBottom
+                        text={ error.message } />
+                }
 
             </form>
         </div>

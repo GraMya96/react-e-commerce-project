@@ -38,9 +38,9 @@ const App = () => {
 				If the user is not already in the DB, using this imported
 				function we create one, based on the data of the user object */
 
-			if( user ) {
+			if( user && user !== null ) {
 				const userReference = await createUserProfileDocument( user );
-				userReference.onSnapshot( ( snapshot ) => {
+				userReference.onSnapshot( snapshot => {
 
 					dispatch( setCurrentUser( {
 						id: snapshot.id,
@@ -51,7 +51,7 @@ const App = () => {
 			}
 
 			else {
-				dispatch( setCurrentUser( user ) );
+				dispatch( setCurrentUser( user ) ); //the equivalent of saying user: null
 			}
 
 

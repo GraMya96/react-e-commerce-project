@@ -12,15 +12,22 @@ import './user-message.scss';
 /* Other .js Files: */
 
 
-const UserMessage = ({ text, type }) => {
+const UserMessage = ({ text, type, marginTop, marginBottom }) => {
 
     const messageType = type && type === 'error'
         ? 'error'
         : 'confirm';
 
+    const marginT = marginTop
+        ? 'margin-top'
+        : ''
+
+    const marginB = marginBottom
+    ? 'margin-bottom'
+    : ''
 
     return (
-        <span className={ `user-message ${ messageType }` }>
+        <span className={ `user-message ${ messageType } ${ marginT } ${ marginB }` }>
             { text }
         </span>
     )

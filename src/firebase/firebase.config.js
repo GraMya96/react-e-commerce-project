@@ -1,5 +1,4 @@
 import firebase from "firebase/app";
-
 // Importing just what we need respectively for DB storage and Authentication:
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -30,13 +29,13 @@ export const createUserProfileDocument = async ( user, additionalData ) => {
         // give us back: the Reference and the Snapshot, which
         // contains the actual data about our request.
         // Using the CRUD methods get(), set(), update(), delete() etc.
-        // on the reference, we retrieve the object data review
+        // on the reference, we retrieve asyncronously the object data review
 
         const userReference = firestore.doc(`users/${user.uid}`);
 
-        const userSnapShot = userReference.get();
+        const userSnapShot = await userReference.get();
 
-        if( !userSnapShot.exists ) {
+        if( !userSnapShot.exists ) { //Firebase v8... exists is a property, not a method!
             // If the user Snaphot doesn't exist, we create it...
             // we create a new User on the DB based on our user object
 
@@ -54,10 +53,10 @@ export const createUserProfileDocument = async ( user, additionalData ) => {
             catch( error ) {
                 console.log("Error creating user!", error.message);
             }
-
-            return userReference;
-
         }
+
+        return userReference;
+
     }
 }
 

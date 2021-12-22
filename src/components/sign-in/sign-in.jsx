@@ -3,6 +3,7 @@ import Input from '../input/input.jsx';
 import Button from '../button/button.jsx';
 import { auth, signInWithGoogle } from '../../firebase/firebase.config';
 import './sign-in.scss';
+import UserMessage from '../../UI/user-message/user-message.jsx';
 
 
 const SignIn = props => {
@@ -13,6 +14,11 @@ const SignIn = props => {
     } );
 
     const { email, password } = inputField;
+
+    const [ error, setError ] = useState({
+        isError: false,
+        message: ''
+    });
 
     const handleChange = event => {
         setInputField( prevState => {
@@ -37,7 +43,10 @@ const SignIn = props => {
             } )
         }
         catch( error ) {
-            console.log( error );
+            setError({
+                isError: true,
+                message: error.message
+            });
         }
     }
 
@@ -77,6 +86,13 @@ const SignIn = props => {
                         Sign In with Google
                     </Button>
                 </div>
+
+                { error.isError
+                    && <UserMessage
+                        type="error"
+                        marginTop
+                        text={ error.message } />
+                }
 
             </form>
         </div>
